@@ -12,19 +12,20 @@ query.exec(function(error, professors) {
 });*/
 
 const queries = [
-  //1)
+  
+  // How many registered voters live in the Canton zip code (13617)?
   Voter.find().where('zip').equals('13617'),
 
-  //2)
+  // What are the full names of all the registered voters whose first-name is STARR?
   Voter.find().where('first').equals('STARR'),
 
-  //3)
+  // How many people voted in the 2016 general election (GE16)?
   Voter.find({ "history": /GE16/i }),
 
-  //4)
+  // What is the last-name that comes last in the county in alphabetical order?
   Voter.find().sort('-last').limit(1),
 
-  //5)
+  // How many zip codes does the county contain?
   Voter.distinct('zip')
 
 ];
