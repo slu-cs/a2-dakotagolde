@@ -35,7 +35,7 @@ file.on('close', function() {
     .then(() => Promise.all(rows))
     .then(() => mongoose.connection.close())
     .then(() => console.log('Database is ready.'))
-    .catch(error => console.error(error.stack));
+    .catch(error => console.error(error.stack))
 });
 
 
