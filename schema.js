@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 // Schema for a collection of voters
-const voter = new mongoose.Schema({
+const Voter = new mongoose.Schema({
   first: String,
   last: String,
   zip: String,
