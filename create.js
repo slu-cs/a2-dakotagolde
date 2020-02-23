@@ -24,7 +24,7 @@ file.on('line', function(line) {
       last: column[1],
       zip: column[2],
       history: column[3]
-    })
+    }).save()
   );
 });
 
@@ -32,7 +32,7 @@ file.on('line', function(line) {
 // Sort disciplines by (increasing) popularity.
 file.on('close', function() {
   mongoose.connection.dropDatabase()
-    .then(() => Promise.all(rows.map(d => d.save())))
+    .then(() => Promise.all(rows))
     .then(() => mongoose.connection.close())
     .then(() => console.log('Database is ready.'))
     .catch(error => console.error(error.stack));
