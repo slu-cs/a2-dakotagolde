@@ -36,4 +36,3 @@ mongoose.connection.dropDatabase()
     .catch(error => console.log(error.stack));
 
   });
-\
