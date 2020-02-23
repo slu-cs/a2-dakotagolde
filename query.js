@@ -19,7 +19,7 @@ const queries = [
   Voter.find().where('first').equals('STARR'),
 
   //3)
-  Voter.find().where('history').in("GE16"),
+  Voter.find({ "history": /GE16/i }),
 
   //4)
   Voter.find().sort('-last').limit(1),
