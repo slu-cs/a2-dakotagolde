@@ -16,7 +16,7 @@ const file = readline.createInterface({
 const rows = [];
 file.on('line', function(line) {
   const columns = line.split(',');
-  votes.push(
+  rows.push(
         new voter({
           first: columns[0],
           last: columns[1],
