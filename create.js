@@ -17,7 +17,7 @@ const file = readline.createInterface({
 // Create an array of objects, so that each line of the file is represented by an object with three properties.
 const rows = [];
 file.on('line', function(line) {
-  const columns = line.split(',');
+  const column = line.split(',');
   rows.push(
     new voter({
       first: column[0],
