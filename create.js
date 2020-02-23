@@ -1,36 +1,86 @@
-const fs = require('fs');
-const readline = require('readline');
+// Store some data in the faculty database
+
 const mongoose = require('mongoose');
 const connect = require('./db');
-const Voter = require('./schema');
+const Professor = require('./schema');
 
-connect(); // To the database
+connect();  // To the database
 
-const file = readline.createInterface({
-  input: fs.createReadStream('voters.csv')
-
+// Create some faculty
+const harcourt = new Professor({
+  name: 'Ed Harcourt',
+  rank: 'Full',
+  started: 2003,
+  courses: [140, 220, 345, 362, 364]
 });
 
-const votes = [];
-file.on('line', function(line) {
-  const columns = line.split(',');
-  votes.push(
-        new Voter({
-          first: columns[0],
-          last: columns[1],
-          zip: columns[2],
-          history: columns[3]
-    })
-  );
+const torrey = new Professor({
+  name: 'Lisa Torrey',
+  rank: 'Associate',
+  started: 2009,
+  courses: [140, 219, 332, 362, 374, 380]
 });
 
+const lee = new Professor({
+  name: 'Choong-Soo Lee',
+  rank: 'Associate',
+  started: 2010,
+  courses: [140, 219, 256, 321, 370]
+});
 
+/*
+// Delete any previous database
+mongoose.connection.dropDatabase(function() {
 
-file.on('close', function() {
-mongoose.connection.dropDatabase()
-    .then(() => Promise.all(votes.map(d => d.save())))
-    .then(() => mongoose.connection.close())
-    .then(() => console.log('Database is ready.'))
-    .catch(error => console.log(error.stack));
+  // Save the new data
+  harcourt.save(function(error) {
+    if (error) console.error(error.stack);
 
+    torrey.save(function(error) {
+      if (error) console.error(error.stack);
+
+      lee.save(function(error) {
+        if (error) console.error(error.stack);
+
+        // Disconnect
+        mongoose.connection.close(function() {
+          console.log('Database is ready.');
+        });
+      });
+    });
   });
+});
+*/
+
+
+/*
+// New version of callbacks in a sequence (no nesting)
+mongoose.connection.dropDatabase()
+  .then(function() {
+    return harcourt.save();
+  })
+  .then(function() {
+    return torrye.save();
+  })
+  .then(function() {
+    return lee.save();
+  })
+  .then(function() {
+    console.log('Database is ready.');
+    return mongoose.connection.close();
+  })
+  .catch(function(error) {
+    console.error(error.stack);
+  });
+*/
+
+
+// Condensed callbacks in a sequence (no nesting)
+// Reset the data
+mongoose.connection.dropDatabase()
+  .then(() => harcourt.save())
+  .then(() => torrey.save())
+  .then(() => lee.save())
+  .then(() => mongoose.connection.close())
+  .then(() => console.log('Database is ready.'))
+  .catch(error => console.error(error.stack));
