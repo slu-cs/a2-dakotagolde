@@ -1,8 +1,6 @@
-// Query the faculty database
-
 const mongoose = require('mongoose');
 const connect = require('./db');
-const Professor = require('./schema');
+const Voter = require('./schema');
 
 connect(); // To the database
 
@@ -14,30 +12,29 @@ query.exec(function(error, professors) {
 });*/
 
 const queries = [
+  //1)
+  Voter.find().where('zip').equals('13617'),
 
-  // What are names in alphabetical order?
-  Professor.find().sort('name'),
+  //2)
+  Voter.find().where('first').equals('STARR'),
 
-  // Who started most recently?
-  Professor.find().sort('-started').limit(1),
+  //3)
+  Voter.find().where('history').in("GE16"),
 
-  // Who started in 2003?
-  Professor.find().where('started').equals(2003),
+  //4)
+  Voter.find().sort('-last').limit(1),
 
-  // Who teaches 362?
-  Professor.find().where('courses').in(362),
+  //5)
+  Voter.distinct('zip')
 
-  // What are all the ranks?
-  Professor.distinct('rank')
 ];
 
-// Run the queries in parallel
 Promise.all(queries)
   .then(function(results) {
-    console.log('Names in order: ', results[0].map(p => p.name));
-    console.log('Started most recently: ', results[1].map(p => p.name));
-    console.log('Started in 2003: ', results[2].map(p => p.name));
-    console.log('Teaches 362: ', results[3].map(p => p.name));
-    console.log('Distinct ranks: ', results[4]);
+    console.log('Number of registered voters in Canton: ', results[0].length);
+    console.log('Voters with name the first name STARR: ', results[1].map(v => (v.first + " " + v.last)));
+    console.log('Number of 2016 general election Voters: ', results[2].length);
+    console.log('last-name that comes last in the county in alphabetical order:', results[3].map(v => v.last));
+    console.log('Number of Distinct zip codes: ', results[4].length);
     mongoose.connection.close();
   }).catch(error => console.error(error.stack));
