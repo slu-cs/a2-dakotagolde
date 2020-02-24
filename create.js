@@ -13,7 +13,6 @@ const file = readline.createInterface({
 
 });
 
-
 //Read through the voters csv and make voter objects
 const votes = [];
 file.on('line', function(line) {
@@ -27,7 +26,6 @@ file.on('line', function(line) {
     })
   );
 });
-
 
 // Promise all and save() the voter objects
 file.on('close', function() {

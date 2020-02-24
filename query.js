@@ -4,13 +4,6 @@ const Voter = require('./schema');
 
 connect(); // To the database
 
-/*// What documents are in the collection?
-const query = Professor.find();
-query.exec(function(error, professors) {
-  if (error) console.error(error.stack);
-  console.log(professors);
-});*/
-
 const queries = [
 
   // How many registered voters live in the Canton zip code (13617)?
