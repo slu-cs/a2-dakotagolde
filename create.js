@@ -1,34 +1,39 @@
+const fs = require('fs');
+const readline = require('readline');
 const mongoose = require('mongoose');
 const connect = require('./db');
 const Voter = require('./schema');
-const fs = require('fs');
-const readline = require('readline');
+
+connect(); // To the database
+
+// Set up the voters file
 const file = readline.createInterface({
   input: fs.createReadStream('voters.csv')
+
 });
 
-connect();
 
-// Empty array of voter data
-voter_data = []
-
-// Read the csv and put information into array
+//Read through the voters csv and make voter objects
+const votes = [];
 file.on('line', function(line) {
-    const columns = line.split(',');
-    voter_data.push(new Voter({
-        first_name: columns[0],
-        last_name: columns[1],
-        zipcode: columns[2],
-        history: columns[3]
-        })
-    );
+  const columns = line.split(',');
+  votes.push(
+        new Voter({
+          first: columns[0],
+          last: columns[1],
+          zip: columns[2],
+          history: columns[3]
+    })
+  );
 });
 
-// Close the file and save the voters to the database
+
+// Promise all and save() the voter objects
 file.on('close', function() {
-    mongoose.connection.dropDatabase()
-        .then(() => Promise.all(voter_data.map(voter => voter.save())))
-        .then(() => mongoose.connection.close())
-        .then(() => console.log('Database is ready.'))
-        .catch(error => console.error(error.stack));
-});
+mongoose.connection.dropDatabase()
+    .then(() => Promise.all(votes.map(d => d.save())))
+    .then(() => mongoose.connection.close())
+    .then(() => console.log('Database is ready.'))
+    .catch(error => console.log(error.stack));
+
+  });

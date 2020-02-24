@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 
 // Schema for a collection of voters
 const Voter = new mongoose.Schema({
-  first_name: String,
-  last_name: String,
-  zipcode: Number,
-  history: String
-});
+    first: String,
+    last: String,
+    zip: String,
+    history: String
+    });
 
 // Speed up queries on all fields
-Voter.index({first_name: 1});
-Voter.index({last_name: 1});
-Voter.index({zipcode: 1});
+Voter.index({frist: 1});
+Voter.index({last: 1});
+Voter.index({zip: 1});
 Voter.index({history: 1});
 
 // Compile and export this schema
