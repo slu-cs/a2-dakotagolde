@@ -33,9 +33,9 @@ const queries = [
 Promise.all(queries)
   .then(function(results) {
     console.log('Number of registered voters in Canton: ', results[0]);
-    console.log('Voters with name the first name STARR: ', results[1].map(v => (v.first + " " + v.last)));
+    console.log('Voters with name the first name STARR: ', results[1].map(v => (v.first_name + " " + v.last_name)));
     console.log('Number of 2016 general election Voters: ', results[2]);
-    console.log('The last-name that comes last in the county in alphabetical order:', results[3].map(v => v.last));
+    console.log('The last-name that comes last in the county in alphabetical order:', results[3].map(v => v.last_name));
     console.log('Number of Distinct zip codes: ', results[4].length);
     mongoose.connection.close();
   }).catch(error => console.error(error.stack));

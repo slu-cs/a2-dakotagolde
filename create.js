@@ -1,8 +1,9 @@
-const fs = require('fs');
-const readline = require('readline');
+
 const mongoose = require('mongoose');
 const connect = require('./db');
 const Voter = require('./schema');
+const fs = require('fs');
+const readline = require('readline');
 
 connect(); // To the database
 
@@ -19,8 +20,8 @@ file.on('line', function(line) {
   const columns = line.split(',');
   votes.push(
         new Voter({
-          first: columns[0],
-          last: columns[1],
+          first_name: columns[0],
+          last_name: columns[1],
           zip: columns[2],
           history: columns[3]
     })
