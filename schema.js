@@ -2,19 +2,21 @@
 
 const mongoose = require('mongoose');
 
+
 // Schema for a collection of voters
 const Voter = new mongoose.Schema({
-    first: String,
-    last: String,
-    zip: String,
-    history: String
-    });
+  firstName: String,
+  lastName: String,
+  zipCode: String,
+  historyString: String
+});
+
 
 // Speed up queries on all fields
-Voter.index({frist: 1});
-Voter.index({last: 1});
-Voter.index({zip: 1});
-Voter.index({history: 1});
+Voter.index({firstName: 1});   // I want to be able to look up professors by their name and quicly
+Voter.index({lastName: 1});
+Voter.index({zipCode: 1});
+Voter.index({historyString: 1});
 
-// Compile and export this schema
+// Compile and export this Schema
 module.exports = mongoose.model('Voter', Voter);
