@@ -17,13 +17,13 @@ const queries = [
   Voter.find().where('zip').equals('13617').countDocuments(),
 
   // What are the full names of all the registered voters whose first-name is STARR?
-  Voter.find().where('first').equals('STARR'),
+  Voter.find().where('first_name').equals('STARR'),
 
   // How many people voted in the 2016 general election (GE16)?
   Voter.find({ "history": /GE16/i }).countDocuments(),
 
   // What is the last-name that comes last in the county in alphabetical order?
-  Voter.find().sort('-last').limit(1),
+  Voter.find().sort('-last_name').limit(1),
 
   // How many zip codes does the county contain?
   Voter.distinct('zip')
